@@ -1014,7 +1014,7 @@ func matchesMood(features *spotify.AudioFeatures, thresholds AudioFeatureThresho
 		return false
 	}
 
-	// Acousticness check
+	// Acousticness check for the sake of variety
 	if thresholds.MinAcousticness > 0 && features.Acousticness < thresholds.MinAcousticness {
 		return false
 	}
