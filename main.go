@@ -16,11 +16,6 @@ func main() {
 	}
 
 	auth = Auth()
-
-	client := GetSpotifyClient()
-
-	SearchSpotify("Never Gonna Give You Up", client)
-
 	StartServer()
 }
 

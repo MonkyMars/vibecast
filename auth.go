@@ -28,6 +28,7 @@ func Auth() *spotifyauth.Authenticator {
 			spotifyauth.ScopePlaylistModifyPrivate,
 			spotifyauth.ScopePlaylistModifyPublic,
 			spotifyauth.ScopeUserTopRead,
+			spotifyauth.ScopeUserLibraryRead,
 		),
 		spotifyauth.WithClientID(os.Getenv("SPOTIFY_CLIENT_ID")),
 		spotifyauth.WithClientSecret(os.Getenv("SPOTIFY_CLIENT_SECRET")),

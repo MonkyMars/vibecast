@@ -53,7 +53,7 @@ func CreatePlaylistAndAddTracks(client *spotify.Client, tracks []spotify.FullTra
 
 	// Create a playlist for the user
 	playlistName := fmt.Sprintf("Your Personalized Weather Mood Playlist - %s", time.Now().Format("Jan 02 15:04"))
-	playlistDescription := "Playlist generated based on your music taste and current weather mood"
+	playlistDescription := fmt.Sprintf("Playlist with %d songs you've explicitly liked, matched to your current mood using genre analysis and mood-based playlists. Max 5 songs per artist for variety.", len(tracks))
 
 	playlist, err := client.CreatePlaylistForUser(
 		ctx,
@@ -75,7 +75,7 @@ func CreatePlaylistAndAddTracks(client *spotify.Client, tracks []spotify.FullTra
 	}
 
 	// Add tracks to the playlist
-	fmt.Printf("Adding %d personalized tracks to playlist\n", len(trackIDs))
+	fmt.Printf("Adding %d personalized tracks to playlist (all songs you've explicitly liked, matched to the current mood)\n", len(trackIDs))
 	_, err = client.AddTracksToPlaylist(ctx, playlist.ID, trackIDs...)
 	if err != nil {
 		return fmt.Errorf("failed to add tracks to playlist: %v", err)
@@ -108,6 +108,10 @@ func CreatePlaylist(client *spotify.Client) {
 	fmt.Printf("Weather: %.2f°C and %s\n", weather.Main.Temp, weather.Weather[0].Description)
 	fmt.Printf("Mood selected based on weather: %s\n", mood)
 	fmt.Println("Analyzing your music taste to create personalized recommendations...")
+	fmt.Println("IMPORTANT: This playlist will ONLY include songs you've explicitly liked on Spotify!")
+	fmt.Println("Using genre analysis and mood-based playlists to ensure songs match the current mood.")
+	fmt.Println("Creating a playlist with up to 50 tracks, all from your liked songs...")
+	fmt.Println("For variety, no artist will have more than 5 songs in the playlist.")
 
 	// Get personalized recommendations
 	tracks, err := GetSpotifyRecommendations(mood, client)
@@ -118,10 +122,12 @@ func CreatePlaylist(client *spotify.Client) {
 
 	if len(tracks) == 0 {
 		fmt.Println("No tracks were recommended. Try again with a different mood or city.")
+		fmt.Println("TIP: Like more songs on Spotify to get better recommendations!")
 		return
 	}
 
 	fmt.Println("\nRecommended tracks for your personalized playlist:")
+	fmt.Printf("(All tracks below are songs you've explicitly liked that match the '%s' mood, with max 5 songs per artist)\n", mood)
 	for i, track := range tracks {
 		fmt.Printf("%d. %s by %s\n", i+1, track.Name, track.Artists[0].Name)
 	}
@@ -134,6 +140,10 @@ func CreatePlaylist(client *spotify.Client) {
 	}
 
 	fmt.Println("\n✅ Your personalized weather-based playlist has been created successfully!")
+	fmt.Printf("The playlist contains %d tracks, ALL songs you've explicitly liked on Spotify.\n", len(tracks))
+	fmt.Printf("All songs match the '%s' mood based on genre analysis and mood-based playlists.\n", mood)
+	fmt.Println("For variety, no artist has more than 5 songs in the playlist.")
+	fmt.Println("This ensures the playlist perfectly matches your music taste while providing variety.")
 	fmt.Println("Check your Spotify account to listen to your new playlist.")
 }
 
