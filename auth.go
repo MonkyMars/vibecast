@@ -21,7 +21,7 @@ func GetSpotifyClient() *spotify.Client {
 
 func Auth() *spotifyauth.Authenticator {
 	auth = spotifyauth.New(
-		spotifyauth.WithRedirectURL("http://localhost:8080/callback"),
+		spotifyauth.WithRedirectURL("http://localhost:8081/callback"),
 		spotifyauth.WithScopes(
 			spotifyauth.ScopeUserReadPrivate,
 			spotifyauth.ScopeUserReadEmail,

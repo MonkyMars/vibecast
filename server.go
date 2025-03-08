@@ -26,9 +26,9 @@ func StartServer() {
 	http.HandleFunc("/callback", CallbackHandler)
 	http.HandleFunc("/success", SuccessHandler)
 	http.HandleFunc("/create-playlist", CreatePlaylistHandler) // Register handler at startup
-	fmt.Println("Server started on http://localhost:8080 - Visit /login to begin")
+	fmt.Println("Server started on http://localhost:8081 - Visit /login to begin")
 	// Add error handling for server
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(":8081", nil); err != nil {
 		log.Fatal("Server error:", err)
 	}
 }

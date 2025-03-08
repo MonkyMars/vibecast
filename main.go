@@ -2,17 +2,20 @@ package main
 
 import (
 	"log"
+	"os"
 
-	"github.com/joho/godotenv"
 	spotifyauth "github.com/zmb3/spotify/v2/auth"
 )
 
 var auth *spotifyauth.Authenticator
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	// Load environment variables from build-time values
+	envVars := LoadEnvVars()
+
+	// Set environment variables for the application
+	for key, value := range envVars {
+		os.Setenv(key, value)
 	}
 
 	auth = Auth()

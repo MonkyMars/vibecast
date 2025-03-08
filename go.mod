@@ -1,4 +1,4 @@
-module mood-songs
+module vibecast
 
 go 1.23.3
 

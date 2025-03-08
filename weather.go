@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
 type Weather struct {
@@ -19,12 +17,16 @@ type Weather struct {
 }
 
 func GetWeather(city string) (*Weather, error) {
-	err := godotenv.Load()
-	handleError(err)
 	apiKey := os.Getenv("WEATHER_API_KEY")
+	if apiKey == "" {
+		return nil, fmt.Errorf("WEATHER_API_KEY environment variable not set")
+	}
+
 	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric", city, apiKey)
 	resp, err := http.Get(url)
-	handleError(err)
+	if err != nil {
+		return nil, err
+	}
 	defer resp.Body.Close()
 
 	var weather Weather
@@ -35,6 +37,7 @@ func GetWeather(city string) (*Weather, error) {
 
 	return &weather, nil
 }
+
 func GetMoodFromWeather(city string) string {
 	weather, err := GetWeather(city)
 	if err != nil {
