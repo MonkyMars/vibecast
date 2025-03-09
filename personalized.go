@@ -928,6 +928,28 @@ func GetMoodMatchingGenres(mood string) []string {
 	}
 }
 
+func GetMoodFromGenre(genre string) string {
+	moodMap := map[string]string{}
+
+	for _, g := range GetMoodMatchingGenres("energetic") {
+		moodMap[g] = "energetic"
+	}
+	for _, g := range GetMoodMatchingGenres("relaxed") {
+		moodMap[g] = "relaxed"
+	}
+	for _, g := range GetMoodMatchingGenres("intense") {
+		moodMap[g] = "intense"
+	}
+	for _, g := range GetMoodMatchingGenres("thoughtful") {
+		moodMap[g] = "thoughtful"
+	}
+
+	if mood, exists := moodMap[genre]; exists {
+		return mood
+	}
+	return "neutral"
+}
+
 // AnalyzeAudioFeaturesForMood analyzes audio features for a batch of tracks and returns those that match the mood
 func AnalyzeAudioFeaturesForMood(client *spotify.Client, trackIDs []spotify.ID, mood string) ([]spotify.ID, error) {
 	if len(trackIDs) == 0 {
