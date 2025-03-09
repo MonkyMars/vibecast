@@ -66,7 +66,7 @@ This creates a single `vibecast.exe` file with your API credentials securely emb
 
 5. Enter a city when prompted
 
-6. Enjoy your personalized weather-based playlist!
+6. Enjoy your personalized weather or genre-based playlist!
 
 ## Security Notes
 
